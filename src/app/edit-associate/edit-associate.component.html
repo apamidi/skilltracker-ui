@@ -1,0 +1,166 @@
+<div class="row" style="max-width:1200px;padding:10px 20px;background:#ebeff2">
+    <h4>Edit Associate</h4>
+    <div *ngIf="!validInput" style="color : red">
+            <span *ngFor="let msg of errorMessages" style="color : red">{{msg}}<br /></span>
+          </div>
+    <form>
+        <div class="well well-md">
+            <div class="row">
+                <div class="col-sm-2">
+                    <div *ngIf="associate.pic">
+                            <img [src]="associate.pic" alt="" class="img-rounded img-responsive" />
+                    </div>
+                    <div *ngIf="!associate.pic">
+                            <img src="http://placehold.it/380x500" alt="" class="img-rounded img-responsive" />
+                    </div>
+                </div>
+                <div class="col-sm-10">
+                    <div class="form-group row">
+                        <label for="associateName" class="col-sm-2 col-form-label">Name:</label>
+                        <div class="col-sm-10">
+                          {{associate.associateName}}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="associateId" class="col-sm-2 col-form-label">ID:</label>
+                        <div class="col-sm-10">
+                          {{associate.associateId}}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="mobile" class="col-sm-2 col-form-label">Mobile:</label>
+                        <div class="col-sm-8">
+                            <input type="tel" name="mobile" required [(ngModel)]="associate.mobile">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="email" class="col-sm-2 col-form-label">Email:</label>
+                        <div class="col-sm-8">
+                            <input type="email" name="email" placeholder="xxxx@cognizant.com"
+                            required [(ngModel)]="associate.email">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="gender" class="col-sm-2 col-form-label">Sex:</label>
+                        <div class="col-sm-10">
+                          {{associate.gender}}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="gender" class="col-sm-2 col-form-label">Level:</label>
+                        <div class="col-sm-8">
+                            <select class="hideLabel form-control" name="level" [(ngModel)] = "associate.level">
+                                <option *ngFor="let level of levelArr" [value]="level">{{level}}</option> 
+                                
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="status" class ="col-sm-2 col-form-label">Status:</label>
+                          <div class="col-sm-8">
+                            <select class="hideLabel form-control" name="status" [(ngModel)] = "associate.status">
+                                <option *ngFor="let status of statusArr" [value]="status">{{status}}</option> 
+                                
+                            </select>
+                          </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="remark" class="col-sm-2 col-form-label">Remark:</label>
+                        <div class="col-sm-8">
+                            <textarea name="remark" [(ngModel)]="associate.remark"></textarea>
+                        </div>
+                    </div>
+                        
+                </div>
+                
+            </div>
+        </div>
+
+        <h5>Add New Skills</h5>
+          <div class="well well-md">
+
+            <div class="table table-responsive">
+                <table class="table">
+                  <thead>
+                      <tr>
+                          <th class="col-sm-1">Select</th>
+                          <th class="col-sm-1">Skill</th>
+                          <th class="col-sm-1">Skill Level</th>
+                          <th class="col-sm-1">Rating</th>
+                        <!--  <th class="col-sm-1">Remove</th> -->
+                          
+                        </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let skill of skillArr">
+                      
+                      <td>
+                          <div *ngIf="!skill.isSaved">
+                              <input id="selectSkill" type="checkbox"  name="selectSkill"  value="{{skill.skillId}}" 
+                              [(ngModel)]="skill.isSelected"/>
+                          </div>
+                      </td>
+                      
+                      <td>
+                          <div>
+                                <label>{{skill.skillName}}</label>
+                          </div>
+                      </td>
+
+                      <td>
+                          <div class="slidecontainer col-sm-8">
+                             <input type="range" name="skillRating"  min="0" max="20" value="10" required data-show-value="true" [(ngModel)]="skill.skillRating">
+                          </div>
+                      </td>
+                      <td>
+                        {{skill.skillRating}}
+                      </td>
+                      
+                      <!--
+                      <td>
+                        <div *ngIf="skill.isSelected">
+                            <input id="removeSkill" type="checkbox"  name="removeSkill"  value="{{skill.skillId}}" 
+                            [(ngModel)]="skill.removeSkill"/>
+                        </div>                          
+                      </td>
+                    -->
+                      
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label for="strength" style="float: left" class ="control-label col-sm-3">Strength</label>
+                              <div class="col-sm-8">
+                                  <input type="text" name="strength" class="form-control" id="strength" required [(ngModel)]="associate.strength">
+                              </div>
+                          </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label for="weakness" style="float: left" class ="control-label col-sm-3">Weakness</label>
+                              <div class="col-sm-8">
+                                  <input type="text" name="weakness" class="form-control" id="weakness" required [(ngModel)]="associate.weakness">
+                              </div>
+                          </div>
+                    </div>
+                </div>
+                
+            </div> 
+            
+          </div>
+
+          <div class="col-md-6 col-md-offset-3">
+              <button type="button" (click)="editAssociate(associate)">Update</button>
+              <button type="button" (click)="cancel()">Cancel</button>
+          </div>
+            
+          <div *ngIf="!validInput" style="color : red">
+                <span style="color : red">Errors displayed at the top</span>
+                
+          </div>
+    </form>
+
+</div>

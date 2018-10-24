@@ -1,0 +1,159 @@
+<div class="row" style="max-width:1200px;padding:40px 40px;background:#ebeff2">
+
+    <div class="well well-sm">
+        <dx-chart
+            id="chart"
+            [dataSource]="asSummaryArr"
+            palette="soft">
+            <dxo-title 
+                text="Skill Breakdown of Cognizant Associates"
+                subtitle="FSD Sample data">
+            </dxo-title>
+            <dxo-common-series-settings 
+                argumentField="skillName"
+                type="bar"
+                valueField="associateCount"
+                [ignoreEmptyPoints]="true">
+            </dxo-common-series-settings>
+            <dxo-series-template nameField="skillName"></dxo-series-template>
+            <dxo-export [enabled]="true"></dxo-export>
+            <dxo-tooltip
+                [enabled]="true"
+                [customizeTooltip]="false">
+            </dxo-tooltip>
+        </dx-chart>
+
+        <div class="row" style="max-width:1200px;padding:10px 5px;">
+            <div class="col-md-2" style="background-color: lightpink;color: white;padding:10px 5px;">
+                {{assocCount}} <br>Registered candidates
+            </div>
+            <div class="col-md-2" style="background-color: thistle;color: white;padding:10px 5px;">
+                {{dashboardSummary.malePercentage | number : '1.2-2' }}% <br>Male Candidates
+            </div>
+            <div class="col-md-2" style="background-color: lightpink;color: white;padding:10px 5px;">
+                {{dashboardSummary.femalePercentage | number : '1.2-2' }}% <br>Female Candidates
+            </div>
+            <div class="col-md-2" style="background-color: thistle;color: white;padding:10px 5px;">
+                {{dashboardSummary.levelOnePercentage | number : '1.2-2' }}% <br>Level 1 candidates
+            </div>
+            <div class="col-md-2" style="background-color: lightpink;color: white;padding:10px 5px;">
+                {{dashboardSummary.levelTwoPercentage | number : '1.2-2' }}% <br>Level 2 candidates
+            </div>
+            <div class="col-md-2" style="background-color: thistle;color: white;padding:10px 5px;">
+                {{dashboardSummary.levelThreePercentage | number : '1.2-2' }}% <br>Level 3 candidates
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="row" style="max-width:1200px;padding:10px 5px;">
+            
+      <div class="col-md-2">
+          <input type="text" class="form-control" placeholder="Search by Name" [(ngModel)]="assocNm">
+      </div>
+
+      <div class="col-md-2">
+        <input type="number" class="form-control" id="assocId" placeholder="Search by ID" [(ngModel)]="assocId">
+      </div>
+
+      <div class="col-md-2">
+          <input type="text" class="form-control" id="assocEmail" placeholder="Search by Email" [(ngModel)]="assocEmail">
+      </div>
+
+      <div class="col-md-2">
+          <input type="number" class="form-control" id="assocMob" placeholder="Search by Mobile" [(ngModel)]="assocMob">
+      </div>
+      
+      <div class="col-md-2">
+          <input type="text" class="form-control" id="assocStr" placeholder="Search by Strength" [(ngModel)]="assocStr">
+      </div>
+        
+    </div>
+
+    <div>
+        <span *ngIf="message != null" style="color : green">{{message}}</span>
+    </div>
+
+    <div>
+        <span *ngIf="errMsg != null" style="color : red">{{errMsg}}</span>
+    </div>
+
+    <div class="table table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                  <!--
+                  <th class="col-sm-1">NAME</th>
+                  <th class="col-sm-1">ID</th>
+                  <th class="col-sm-1">EMAIL</th>
+                  <th class="col-sm-1">STATUS</th>
+                  <th class="col-sm-1">STRENGTH</th>
+                  <th class="col-sm-1"></th>
+                  <th class="col-sm-1"></th>
+                  <th class="col-sm-1"></th>
+                  -->
+                  <th class="col">STATUS</th>
+                  <th class="col">NAME</th>
+                  <th class="col">ID</th>
+                  <th class="col">EMAIL</th>
+                  <th class="col">MOBILE</th>
+                  <th class="col">STRENGTH</th>
+                  <th class="col"></th>
+                  <th class="col"></th>
+                  <th class="col"></th>
+                  
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let assoc of associateArr  | associateSearch : assocNm : assocEmail : assocId : assocMob : assocStr">
+                    <td>
+                        <div *ngIf="assoc.status == 'Green'" style="color : lightgreen">
+                            <div class="color-box" style="background-color:  lightgreen;">
+                                {{assoc.status}}
+                            </div>
+                        </div>
+                        <div *ngIf="assoc.status == 'Blue'" style="color : lightblue">
+                            <div class="color-box" style="background-color:  lightblue;">
+                                {{assoc.status}}
+                            </div>
+                        </div>
+                        <div *ngIf="assoc.status == 'Red'" style="color : red">
+                            <div class="color-box" style="background-color:  red;">
+                                {{assoc.status}}
+                            </div>
+                        </div>
+                        
+                    </td>
+
+                    <td>
+                        {{assoc.associateName}}
+                    </td>
+                    <td>
+                        {{assoc.associateId}}
+                    </td>
+                    <td>
+                        {{assoc.email}}
+                    </td>
+                    <td>
+                        {{assoc.mobile}}
+                    </td>
+                    
+                    <td>
+                        {{assoc.strength}}
+                    </td>
+                    <td>
+                        <button id="viewAssocBut" type="button" (click)="viewAssociate(assoc.associateId)">View</button>
+                    </td>
+                    <td>   
+                        <button type="editAssocBut" (click)="editAssociate(assoc.associateId)">Edit</button>
+                    </td>
+                    <td>   
+                        <button type="delAssocBut" (click)="deleteAssociate(assoc)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

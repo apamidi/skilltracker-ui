@@ -1,0 +1,56 @@
+<div  style="max-width:1200px;padding:40px 20px;background:#ebeff2">
+
+    <h3>Add Skill</h3>
+
+    <div>
+        <span *ngIf="message != null" style="color : green">{{message}}</span>
+    </div>
+
+    <div>
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label for="skillName" style="float: left" class ="control-label col-sm-3">Add Skill:</label>
+                <div class="col-sm-8">
+                    <input type="text" name="skillName" class="form-control" id="skillName" placeholder="Skill Name" required = "true" [(ngModel)]="skill.skillName">
+                </div>
+                <button type="button" (click)="addSkill()">Add</button>
+            </div>
+        </form>
+    </div>
+
+
+    <div>
+        <span *ngIf="errMsg != null" style="color : red">{{errMsg}}</span>
+    </div>
+
+    <div class="table table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                <th class="col-sm-3">Available Skills</th>
+                
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let skill of skillArr">
+                    
+                    <td>
+                        <label for="skillName" style="float: left" class ="control-label col-sm-6">{{skill.skillName}}</label>
+                    </td>
+                    
+                    <td>
+                        <button id="editSkillBut" type="button" (click)="editSkill(skill)">Edit</button>
+                        
+                        <button type="button" (click)="deleteSkill(skill)">Delete</button>
+                
+                    </td>
+    
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+

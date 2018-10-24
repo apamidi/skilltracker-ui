@@ -1,0 +1,37 @@
+<div  style="max-width:1200px;padding:40px 20px;background:#ebeff2">
+
+    <h4>Update Skill</h4>
+
+    <div>
+        <span *ngIf="message != null" style="color : green">{{message}}</span>
+    </div>
+
+    <div>
+        <span *ngIf="errMsg != null" style="color : red">{{errMsg}}</span>
+    </div>
+
+    <form class="form-horizontal" role="form">
+        <div class="well well-md">
+          <div class="row">
+              <div class="col-sm-8">
+                  <div class="form-group">
+                      <label for="skillName" style="float: left" class ="control-label col-sm-3">Skill Name:</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="skillName" class="form-control" required [(ngModel)]="skill.skillName">
+                        </div>
+                        
+                  </div>
+              </div>
+
+              <div class="col-sm-4">
+                  <button type="button" (click)="updateSkill(skill)">Update</button>
+                  <button type="button" (click)="cancel()">Cancel</button>
+              </div>
+          </div>
+        </div>
+
+        
+    </form>
+
+</div>
+
